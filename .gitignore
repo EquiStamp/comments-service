@@ -1,0 +1,11 @@
+.DS_Store
+
+node_modules
+builds
+build
+
+*.egg-info
+__pycache__
+.hypothesis
+*.idea
+.env
