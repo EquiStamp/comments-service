@@ -1,13 +1,6 @@
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Blueprint, request, jsonify
 import markdown
-import re
-from comments.database_setup import make_connection_string
-from comments.models import User, Comment
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = make_connection_string()
-db = SQLAlchemy(app)
+from comments.models import User, Comment, db, json_serialize
 
 
 def is_valid_markdown(content):
@@ -18,7 +11,16 @@ def is_valid_markdown(content):
         return False
 
 
-@app.route("/users", methods=["POST"])
+comments = Blueprint("comments", __name__, url_prefix="/comments")
+users = Blueprint("users", __name__, url_prefix="/users")
+
+
+@users.route("/", methods=["GET"])
+def get_users():
+    return jsonify(db.session.query(User).all()), 200
+
+
+@users.route("/", methods=["POST"])
 def create_user():
     data = request.get_json()
     user = User(
@@ -32,7 +34,7 @@ def create_user():
     return jsonify(user.id), 201
 
 
-@app.route("/users/<int:user_id>", methods=["PUT"])
+@users.route("/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
     user = User.query.get_or_404(user_id)
     data = request.get_json()
@@ -44,7 +46,7 @@ def update_user(user_id):
     return "", 204
 
 
-@app.route("/users/<int:user_id>", methods=["DELETE"])
+@users.route("/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
@@ -52,7 +54,7 @@ def delete_user(user_id):
     return "", 204
 
 
-@app.route("/comments", methods=["POST"])
+@comments.route("/", methods=["POST"])
 def create_comment():
     data = request.get_json()
     content = data["content"]
@@ -69,7 +71,7 @@ def create_comment():
     return jsonify(comment.id), 201
 
 
-@app.route("/comments/<int:comment_id>", methods=["PUT"])
+@comments.route("/<int:comment_id>", methods=["PUT"])
 def update_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     data = request.get_json()
@@ -81,7 +83,7 @@ def update_comment(comment_id):
     return "", 204
 
 
-@app.route("/comments/<int:comment_id>", methods=["DELETE"])
+@comments.route("/<int:comment_id>", methods=["DELETE"])
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
@@ -89,7 +91,7 @@ def delete_comment(comment_id):
     return "", 204
 
 
-@app.route("/comments/<int:comment_id>/upvote", methods=["POST"])
+@comments.route("/<int:comment_id>/upvote", methods=["POST"])
 def upvote_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.upvotes += 1
@@ -97,7 +99,7 @@ def upvote_comment(comment_id):
     return "", 204
 
 
-@app.route("/comments/<int:comment_id>/downvote", methods=["POST"])
+@comments.route("/<int:comment_id>/downvote", methods=["POST"])
 def downvote_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.downvotes += 1
