@@ -11,11 +11,16 @@ class CustomJSONProvider(DefaultJSONProvider):
         return json_serialize(obj)
 
 
-def cli():
+def make_app():
     app = Flask(__name__)
     app.json = CustomJSONProvider(app)
     app.config["SQLALCHEMY_DATABASE_URI"] = make_connection_string()
     app.register_blueprint(users)
     app.register_blueprint(comments)
     db.init_app(app)
+    return app
+
+
+def cli():
+    app = make_app()
     app.run(debug=True)
