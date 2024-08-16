@@ -22,7 +22,9 @@ def upgrade() -> None:
     op.create_table(
         "user",
         sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("session_token", sa.String(length=36), nullable=True),
         sa.Column("username", sa.String(length=50), nullable=False),
+        sa.Column("password", sa.String(length=50), nullable=False),
         sa.Column("display_name", sa.String(length=100), nullable=False),
         sa.Column("email", sa.String(length=120), nullable=False),
         sa.Column("avatar", sa.String(length=200), nullable=True),

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from comments.models import User, Comment, db, json_serialize
+from comments.models import User, db
 
 
 users = Blueprint("users", __name__, url_prefix="/users")
@@ -7,7 +7,11 @@ users = Blueprint("users", __name__, url_prefix="/users")
 
 @users.route("/", methods=["GET"])
 def get_users():
-    return jsonify(db.session.query(User).all()), 200
+    users = db.session.query(User).all()
+    if fields := request.args.get("fields"):
+        fields = fields.split(",")
+        users = [{field: getattr(u, field) for field in fields} for u in users]
+    return jsonify(users), 200
 
 
 @users.route("/", methods=["POST"])

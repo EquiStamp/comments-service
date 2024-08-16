@@ -85,6 +85,10 @@ class Base(DeclarativeBase):
         return {k: v for k, v in vals.items() if v is not None}
 
 
+def generate_uuid():
+    return str(uuid.uuid4())
+
+
 class User(Base):
     __tablename__ = "user"
 
@@ -98,6 +102,8 @@ class User(Base):
     ]
 
     id = Column(Integer, primary_key=True)
+    session_token = Column(String(36), nullable=True, default=generate_uuid)
+    password = Column(String(50), nullable=False)
     username = Column(String(50), unique=True, nullable=False)
     display_name = Column(String(100), nullable=False)
     email = Column(String(120), unique=True, nullable=False)

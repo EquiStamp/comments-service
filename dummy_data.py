@@ -13,6 +13,7 @@ def create_users(db):
     for _ in range(10):
         user = User(
             username=fake.user_name(),
+            password=fake.password(),
             display_name=fake.name(),
             email=fake.email(),
             avatar=fake.image_url(),
