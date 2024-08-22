@@ -1,8 +1,11 @@
-from flask import Blueprint, request, jsonify
+from pathlib import Path
+from flask import Blueprint, request, jsonify, send_file
 from comments.models import User, db
 
 
 users = Blueprint("users", __name__, url_prefix="/users")
+AVATARS_PATH = Path(__file__).parent / 'avatars'
+AVATARS_PATH.mkdir(parents=True, exist_ok=True)
 
 
 @users.route("/", methods=["GET"])
@@ -46,3 +49,8 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return "", 204
+
+
+@users.route('/avatars/<path:img>', methods=["GET"])
+def send_report(img):
+    return send_file(AVATARS_PATH / img)

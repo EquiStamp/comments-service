@@ -9,3 +9,4 @@ __pycache__
 .hypothesis
 *.idea
 .env
+avatars/

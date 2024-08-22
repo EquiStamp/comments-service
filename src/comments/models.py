@@ -110,6 +110,24 @@ class User(Base):
     avatar = Column(String(200))
     comments = relationship("Comment", backref="user", lazy=True)
 
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    def check_password(self, password):
+        return self.password == password
+
 
 class Comment(Base):
     __tablename__ = "comment"
