@@ -22,7 +22,6 @@ def upgrade() -> None:
     op.create_table(
         "user",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("session_token", sa.String(length=36), nullable=True),
         sa.Column("username", sa.String(length=50), nullable=False),
         sa.Column("password", sa.String(length=50), nullable=False),
         sa.Column("display_name", sa.String(length=100), nullable=False),
@@ -35,7 +34,6 @@ def upgrade() -> None:
     op.create_table(
         "comment",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("url", sa.String(length=200), nullable=False),
         sa.Column("parent_id", sa.Integer(), nullable=True),
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("content", sa.Text(), nullable=False),

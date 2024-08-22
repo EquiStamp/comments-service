@@ -102,7 +102,6 @@ class User(Base):
     ]
 
     id = Column(Integer, primary_key=True)
-    session_token = Column(String(36), nullable=True, default=generate_uuid)
     password = Column(String(50), nullable=False)
     username = Column(String(50), unique=True, nullable=False)
     display_name = Column(String(100), nullable=False)
@@ -143,7 +142,6 @@ class Comment(Base):
     ]
 
     id = Column(Integer, primary_key=True)
-    url = Column(String(200), nullable=False)
     parent_id = Column(Integer, ForeignKey("comment.id"), nullable=True)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     content = Column(Text, nullable=False)

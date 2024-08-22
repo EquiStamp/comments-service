@@ -39,7 +39,6 @@ def create_comments(db, users):
         for _ in range(random.randint(1, 5)):
             user = random.choice(users)
             comment = Comment(
-                url=url,
                 user_id=user.id,
                 content=fake.paragraph(nb_sentences=random.randint(1, 5)),
             )
@@ -50,7 +49,6 @@ def create_comments(db, users):
             for _ in range(random.randint(0, 3)):
                 reply_user = random.choice(users)
                 reply = Comment(
-                    url=url,
                     parent_id=comment.id,
                     user_id=reply_user.id,
                     content=fake.paragraph(nb_sentences=random.randint(1, 3)),
