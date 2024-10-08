@@ -132,7 +132,6 @@ class Comment(Base):
     __tablename__ = "comment"
     serializable_fields = [
         "id",
-        "url",
         "parent_id",
         "user_id",
         "content",
