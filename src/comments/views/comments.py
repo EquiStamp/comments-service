@@ -21,7 +21,6 @@ def create_comment():
     if not is_valid_markdown(content):
         return jsonify(error="Invalid markdown"), 400
     comment = Comment(
-        url=data["url"],
         parent_id=data.get("parent_id"),
         user_id=data["user_id"],
         content=content,
