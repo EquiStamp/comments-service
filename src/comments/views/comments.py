@@ -64,3 +64,8 @@ def downvote_comment(comment_id):
     comment.downvotes += 1
     db.session.commit()
     return "", 204
+
+@comments.route("/<int:comment_id>", methods=["GET"])
+def get_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    return jsonify(comment)
