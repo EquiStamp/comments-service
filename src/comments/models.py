@@ -9,6 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 logger = logging.getLogger(__name__)
 
 
+db = SQLAlchemy()
+
 def json_serialize(obj):
     """JSON serializer for objects not serializable by default json code, including SQLAlchemy ORM objects."""
 
@@ -39,7 +41,9 @@ def json_serialize(obj):
     return serialize_single_object(obj)
 
 
-class Base(DeclarativeBase):
+class Base(db.Model):
+    __abstract__ = True
+    
     serializable_fields = ["id"]
 
     def serialize(self, serialize_children=True):
@@ -150,5 +154,3 @@ class Comment(Base):
         "Comment", backref=backref("parent", remote_side=[id]), lazy=True
     )
 
-
-db = SQLAlchemy(model_class=Base)
