@@ -1,7 +1,7 @@
 ---
 name: Fix METR Task
 about: Use this issue template to fix a METR task.
-title: "[FIX-METR-TASK][$150] Name of Task Family Directory"
+title: "[FIX-METR-TASK][$100] Name of Task Family Directory"
 labels: admin
 assignees: ''
 
@@ -51,7 +51,7 @@ The assignee has answered all the requirements and shown proof in a PR that the 
 ### Price
 
 **How much will EquiStamp Pay for Successful Resolution?**
-**USD:$150**
+**USD:$100**
 **PRICE EXPIRATION DATETIME UTC:October 10, 2024 11:59 PM UTC**
 
 ### Resolution Criteria Evaluator
