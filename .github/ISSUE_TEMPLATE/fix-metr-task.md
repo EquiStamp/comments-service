@@ -42,7 +42,6 @@ Please check the google sheet to make sure you fix what we detected as broken. R
 - [ ] Once the PR is merged, assign the merge to MP4 issue in your repo to @chriscanal or @mruwnik so that they know to merge your task back into the main repository.
 - [ ] Add total time spent to comments on this github issue.
 
-
 ### Acceptance Criteria
 
 **How will a reviewer determine that work is complete?**
